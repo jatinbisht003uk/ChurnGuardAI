@@ -976,8 +976,7 @@ with about_col1:
     st.markdown("**Project goals:** Predict churn risk, make customer patterns easier to understand, and help prioritize retention outreach.")
 with about_col2:
     st.markdown("#### Find me online")
-    st.markdown("[GitHub](https://github.com/your-github-username)")
-    st.markdown("[LinkedIn](https://www.linkedin.com/in/your-linkedin-username/)")
-    st.caption("Replace the placeholder URLs in app.py with your real profile links.")
+    st.markdown('<a href="https://github.com/jatinbisht003uk" target="_blank">GitHub</a>',unsafe_allow_html=True)
+    st.markdown('<a href="https://www.linkedin.com/in/jatin-bisht-33580b2b7" target="_blank">LinkedIn</a>', unsafe_allow_html=True)
 
 st.markdown("<div class='footer-note'>© 2026 Jatin Bisht · ChurnGuard AI · Built with Python & Machine Learning · Predictions are estimates, not guarantees.</div>", unsafe_allow_html=True)
