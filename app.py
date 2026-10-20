@@ -149,7 +149,6 @@ st.divider()
 # =====================================================
 # BUSINESS ANALYTICS DATA
 # =====================================================
-
 DATA_PATH = Path(__file__).parent / "Telco_customer_churn.xlsx"
 
 
@@ -157,15 +156,12 @@ DATA_PATH = Path(__file__).parent / "Telco_customer_churn.xlsx"
 def load_customer_data(file_path):
     df = pd.read_excel(file_path)
 
-    # Ensure numeric columns have the correct data types.
     df["Churn Value"] = pd.to_numeric(
         df["Churn Value"], errors="coerce"
     )
-
     df["Tenure Months"] = pd.to_numeric(
         df["Tenure Months"], errors="coerce"
     )
-
     df["Monthly Charges"] = pd.to_numeric(
         df["Monthly Charges"], errors="coerce"
     )
@@ -173,20 +169,14 @@ def load_customer_data(file_path):
     return df
 
 
-try:
-    df_analytics = load_customer_data(DATA_PATH)
-
-except FileNotFoundError:
-    st.error(
-        "Excel dataset not found. Place Telco_customer_churn.xlsx "
-        "in the same folder as app.py."
-    )
-    st.stop()
-
-except Exception as error:
-    st.error(f"Could not load the analytics dataset: {error}")
-    st.stop()
-
+if DATA_PATH.exists():
+    try:
+        df_analytics = load_customer_data(DATA_PATH)
+    except Exception as error:
+        st.error(f"Could not load the analytics dataset: {error}")
+        st.stop()
+else:
+    df_analytics = None
 # =====================================================
 # 5. SIDEBAR
 # =====================================================
