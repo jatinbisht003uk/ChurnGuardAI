@@ -34,64 +34,55 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-        .block-container {
-            max-width: 1250px;
-            padding-top: 2rem;
-            padding-bottom: 3rem;
-        }
-        .main-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0;
-        }
-        .subtitle {
-            color: #9CA3AF;
-            font-size: 1.05rem;
-            margin-top: 0.4rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-        .risk-card {
-            padding: 1.2rem;
-            border-radius: 12px;
-            margin: 1rem 0;
-        }
-        .risk-low {
-            background-color: rgba(34, 197, 94, 0.12);
-            border: 1px solid #22C55E;
-        }
-        .risk-medium {
-            background-color: rgba(245, 158, 11, 0.12);
-            border: 1px solid #F59E0B;
-        }
-        .risk-high {
-            background-color: rgba(239, 68, 68, 0.12);
-            border: 1px solid #EF4444;
-        }
-        div[data-testid="stMetric"] {
-            background-color: rgba(128, 128, 128, 0.07);
-            border: 1px solid rgba(128, 128, 128, 0.2);
-            padding: 1rem;
-            border-radius: 12px;
-        }
-        div.stButton > button {
-            width: 100%;
-            min-height: 3rem;
-            font-weight: 700;
-            border-radius: 10px;
-        }
-        footer {
-            visibility: hidden;
-        }
+        :root { --cg-bg: #0b1020; --cg-panel: #121a2d; --cg-line: rgba(148,163,184,.18); }
+        .stApp { background: radial-gradient(ellipse at 12% 0%, rgba(79,70,229,.15), transparent 38%), #0b1020; }
+        .block-container { max-width: 1450px; padding-top: 1.6rem; padding-bottom: 3rem; }
+        [data-testid="stSidebar"] { background: linear-gradient(180deg, #10182b 0%, #0c1221 100%); border-right: 1px solid var(--cg-line); }
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { letter-spacing: -.02em; }
+        .hero { position: relative; overflow: hidden; padding: 2rem 2.1rem; border: 1px solid rgba(129,140,248,.32); border-radius: 24px; background: linear-gradient(120deg, rgba(49,46,129,.65), rgba(17,24,39,.92) 58%, rgba(15,118,110,.32)); box-shadow: 0 18px 55px rgba(0,0,0,.22); margin-bottom: 1.5rem; }
+        .hero:after { content: ''; position: absolute; width: 240px; height: 240px; right: -65px; top: -115px; border-radius: 50%; background: rgba(129,140,248,.13); }
+        .hero-kicker { color: #a5b4fc; text-transform: uppercase; font-size: .76rem; font-weight: 800; letter-spacing: .18em; margin-bottom: .5rem; }
+        .hero-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.08; font-weight: 850; letter-spacing: -.045em; margin: 0; color: #f8fafc; }
+        .hero-copy { color: #cbd5e1; font-size: 1.02rem; margin-top: .8rem; max-width: 760px; }
+        .section-title { font-size: 1.45rem; font-weight: 800; letter-spacing: -.025em; margin: 1rem 0; }
+        .section-eyebrow { color: #818cf8; font-size: .75rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; }
+        .risk-card { padding: 1.25rem 1.4rem; border-radius: 16px; margin: 1rem 0; }
+        .risk-low { background: rgba(34,197,94,.10); border: 1px solid rgba(34,197,94,.5); }
+        .risk-medium { background: rgba(245,158,11,.10); border: 1px solid rgba(245,158,11,.5); }
+        .risk-high { background: rgba(239,68,68,.10); border: 1px solid rgba(239,68,68,.5); }
+        div[data-testid="stMetric"] { background: linear-gradient(145deg, rgba(30,41,59,.82), rgba(15,23,42,.72)); border: 1px solid var(--cg-line); padding: 1.15rem 1.2rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+        div[data-testid="stMetricLabel"] { color: #a5b4fc; font-weight: 650; }
+        div[data-testid="stMetricValue"] { font-weight: 800; letter-spacing: -.035em; }
+        div[data-testid="stForm"] { background: rgba(15,23,42,.52); border: 1px solid var(--cg-line); padding: 1.25rem; border-radius: 20px; }
+        div[data-testid="stVerticalBlockBorderWrapper"] { border-radius: 18px; }
+        .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button { border-radius: 11px; min-height: 2.8rem; font-weight: 750; border: 1px solid rgba(129,140,248,.4); transition: transform .15s ease, box-shadow .15s ease; }
+        .stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(79,70,229,.18); }
+        input, textarea, [data-baseweb="select"] > div { border-radius: 10px !important; }
+        [data-testid="stDataFrame"] { border: 1px solid var(--cg-line); border-radius: 14px; overflow: hidden; }
+        hr { border-color: var(--cg-line); }
+        .footer-note { text-align: center; color: #94a3b8; font-size: .82rem; padding: 1.5rem .5rem .25rem; }
+        footer { visibility: hidden; }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+def polish_chart(fig, height=360):
+    """Apply a consistent dark, dashboard-friendly Plotly style."""
+    fig.update_layout(
+        template="plotly_dark",
+        height=height,
+        margin=dict(l=12, r=12, t=58, b=12),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        title=dict(font=dict(size=16, color="#e2e8f0"), x=0.02, xanchor="left"),
+        font=dict(family="Inter, system-ui, sans-serif", color="#cbd5e1", size=12),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+    fig.update_xaxes(showgrid=False, zeroline=False)
+    fig.update_yaxes(gridcolor="rgba(148,163,184,.14)", zeroline=False)
+    return fig
+
 
 # =====================================================
 # 3. LOAD TRAINED MODEL
@@ -131,11 +122,13 @@ except Exception as error:
 
 @st.cache_data
 def load_customer_data(file_path):
+    # The cleaned CSV avoids publishing customer identifiers and precise locations.
     df = pd.read_csv(file_path)
 
     for column in ["Churn Value", "Tenure Months", "Monthly Charges", "Total Charges"]:
         if column in df.columns:
             df[column] = pd.to_numeric(df[column], errors="coerce")
+
     return df
 
 
@@ -148,7 +141,7 @@ if DATA_PATH.exists():
         st.warning(f"Could not load the analytics dataset: {error}")
 else:
     st.info(
-        "The original Excel dataset is not included in this deployment. "
+        "The cleaned customer dataset is not included in this deployment. "
         "Individual prediction, model performance, and feature importance "
         "remain available; dataset-based analytics are disabled."
     )
@@ -158,26 +151,24 @@ else:
 # =====================================================
 
 st.markdown(
-    '<div class="main-title">📊 ChurnGuard AI</div>',
+    """
+    <div class="hero">
+      <div class="hero-kicker">Customer Intelligence Platform</div>
+      <h1 class="hero-title">ChurnGuard <span style="color:#a5b4fc">AI</span></h1>
+      <div class="hero-copy">Predict churn risk. Understand customer patterns. Prioritize retention with actionable analytics powered by your Random Forest model.</div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
-st.markdown(
-    '<div class="subtitle">Customer Churn Prediction & Retention Analytics</div>',
-    unsafe_allow_html=True,
-)
-st.write(
-    "Estimate customer churn risk, understand potential risk factors, "
-    "and explore retention opportunities using machine learning."
-)
-st.divider()
+
 
 # =====================================================
 # 6. SIDEBAR
 # =====================================================
 
 with st.sidebar:
-    st.title("🛡️ ChurnGuard AI")
-    st.caption("Customer Intelligence Platform")
+    st.markdown("### 🛡️ ChurnGuard AI")
+    st.caption("CUSTOMER INTELLIGENCE PLATFORM")
     st.divider()
     st.subheader("About this project")
     st.write(
@@ -361,6 +352,24 @@ if submitted:
             unsafe_allow_html=True,
         )
         st.progress(churn_probability)
+        st.subheader("📊 Risk interpretation")
+        st.caption("The following are observable customer attributes associated with common retention actions; they are not causal explanations of the model.")
+        risk_signals = []
+        if contract == "Month-to-month":
+            risk_signals.append("Month-to-month contract: discuss whether a longer-term plan offers value.")
+        if tenure <= 12:
+            risk_signals.append("Short tenure: consider onboarding help and an early customer check-in.")
+        if monthly_charges >= 70:
+            risk_signals.append("Higher monthly bill: review plan fit and clearly explain available alternatives.")
+        if online_security == "No" and internet_service != "No":
+            risk_signals.append("Online security is not enabled: explain available security options if relevant.")
+        if tech_support == "No" and internet_service != "No":
+            risk_signals.append("Tech support is not enabled: check whether the customer has unresolved service issues.")
+        if risk_signals:
+            for signal in risk_signals:
+                st.markdown(f"- {signal}")
+        else:
+            st.success("No additional rule-based retention signals were identified from these inputs.")
 
         if prediction == 1:
             st.error("⚠️ The model classifies this customer as likely to churn.")
@@ -438,7 +447,7 @@ st.write(
 if df_analytics is None:
     st.warning(
         "Business Analytics and Customer Risk Segmentation are unavailable because "
-        "'Telco_customer_churn.xlsx' is not present in this deployment."
+        "'telco_customer_churn_clean.csv' is not present in this deployment."
     )
     st.info(
         "To enable these sections online, provide an appropriate dataset. "
@@ -506,10 +515,29 @@ else:
             default=internet_options,
         )
 
+    filter_col3, filter_col4 = st.columns(2)
+    with filter_col3:
+        tenure_range = st.slider(
+            "Tenure range (months)",
+            min_value=0,
+            max_value=max(1, int(analytics_df["Tenure Months"].max())),
+            value=(0, max(1, int(analytics_df["Tenure Months"].max()))),
+        )
+    with filter_col4:
+        payment_options = sorted(analytics_df["Payment Method"].dropna().unique().tolist()) if "Payment Method" in analytics_df.columns else []
+        selected_payments = st.multiselect(
+            "Filter by payment method",
+            options=payment_options,
+            default=payment_options,
+        ) if payment_options else []
+
     filtered_df = analytics_df[
         analytics_df["Contract"].isin(selected_contracts)
         & analytics_df["Internet Service"].isin(selected_internet)
+        & analytics_df["Tenure Months"].between(tenure_range[0], tenure_range[1])
     ]
+    if payment_options:
+        filtered_df = filtered_df[filtered_df["Payment Method"].isin(selected_payments)]
 
     if filtered_df.empty:
         st.warning("No customers match the selected filters.")
@@ -533,6 +561,7 @@ else:
                 hole=0.55,
                 title="Retained vs Churned Customers",
             )
+            polish_chart(fig_churn)
             st.plotly_chart(fig_churn, use_container_width=True)
 
         with chart_col2:
@@ -553,6 +582,7 @@ else:
             fig_contract.update_layout(
                 yaxis_title="Churn Rate (%)", xaxis_title="Contract Type"
             )
+            polish_chart(fig_contract)
             st.plotly_chart(fig_contract, use_container_width=True)
 
         st.subheader("Churn Rate by Customer Tenure")
@@ -700,16 +730,13 @@ else:
         ].copy()
 
         display_columns = [
-        col for col in [
-        "CustomerID",
-        "Contract",
-        "Tenure Months",
-        "Monthly Charges",
-        "Predicted Churn Probability",
-        "Predicted Churn",
-        "Risk Level",
-        ]
-        if col in results.columns
+            "CustomerID",
+            "Contract",
+            "Tenure Months",
+            "Monthly Charges",
+            "Predicted Churn Probability",
+            "Predicted Churn",
+            "Risk Level",
         ]
         available_display_columns = [
             col for col in display_columns if col in report_df.columns
@@ -725,13 +752,23 @@ else:
             use_container_width=True,
             hide_index=True,
         )
-        csv_data = report_df.to_csv(index=False).encode("utf-8")
+        high_risk_only = st.checkbox("Export only high-risk customers", value=True)
+        export_df = report_df.copy()
+        if high_risk_only:
+            export_df = export_df[export_df["Risk Level"].astype(str) == "High"]
+        export_columns = [col for col in [
+            "Contract", "Tenure Months", "Monthly Charges", "Total Charges",
+            "Predicted Churn Probability", "Predicted Churn", "Risk Level"
+        ] if col in export_df.columns]
+        csv_data = export_df[export_columns].to_csv(index=False).encode("utf-8")
         st.download_button(
-            label="📥 Download Customer Risk Report",
+            label="📥 Download High-Risk Customer CSV" if high_risk_only else "📥 Download Filtered Risk Report CSV",
             data=csv_data,
-            file_name="churnguard_customer_risk_report.csv",
+            file_name="churnguard_high_risk_customers.csv" if high_risk_only else "churnguard_customer_risk_report.csv",
             mime="text/csv",
+            use_container_width=True,
         )
+        st.caption(f"Export includes {len(export_df):,} customers and excludes customer identifiers.")
 
 # =====================================================
 # 10. MODEL PERFORMANCE DASHBOARD
@@ -897,3 +934,6 @@ except Exception as error:
 
 st.divider()
 st.caption("ChurnGuard AI | Customer Churn Prediction & Retention Analytics")
+
+
+st.markdown("<div class='footer-note'>ChurnGuard AI · Customer Churn Prediction & Retention Analytics · Predictions are estimates, not guarantees.</div>", unsafe_allow_html=True)
