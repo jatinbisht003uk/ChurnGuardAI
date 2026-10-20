@@ -99,7 +99,7 @@ st.markdown(
 
 BASE_DIR = Path(__file__).parent
 MODEL_PATH = BASE_DIR / "churnguard_model.pkl"
-DATA_PATH = BASE_DIR / "Telco_customer_churn.xlsx"
+DATA_PATH = BASE_DIR / "telco_customer_churn_clean.csv"
 TEST_DATA_PATH = BASE_DIR / "churnguard_test_data.csv"
 
 
@@ -131,11 +131,11 @@ except Exception as error:
 
 @st.cache_data
 def load_customer_data(file_path):
-    df = pd.read_excel(file_path)
+    df = pd.read_csv(file_path)
 
-    for column in ["Churn Value", "Tenure Months", "Monthly Charges"]:
-        df[column] = pd.to_numeric(df[column], errors="coerce")
-
+    for column in ["Churn Value", "Tenure Months", "Monthly Charges", "Total Charges"]:
+        if column in df.columns:
+            df[column] = pd.to_numeric(df[column], errors="coerce")
     return df
 
 
@@ -700,13 +700,16 @@ else:
         ].copy()
 
         display_columns = [
-            "CustomerID",
-            "Contract",
-            "Tenure Months",
-            "Monthly Charges",
-            "Predicted Churn Probability",
-            "Predicted Churn",
-            "Risk Level",
+        col for col in [
+        "CustomerID",
+        "Contract",
+        "Tenure Months",
+        "Monthly Charges",
+        "Predicted Churn Probability",
+        "Predicted Churn",
+        "Risk Level",
+        ]
+        if col in results.columns
         ]
         available_display_columns = [
             col for col in display_columns if col in report_df.columns
@@ -745,11 +748,6 @@ if TEST_DATA_PATH.exists():
     try:
         test_df = pd.read_csv(TEST_DATA_PATH)
 
-        st.success(
-            f"Test dataset loaded successfully: {test_df.shape[0]} rows, "
-            f"{test_df.shape[1]} columns."
-        )
-        st.write("Test dataset columns:", test_df.columns.tolist())
         if "Actual Churn" not in test_df.columns:
             st.error("The test CSV must contain an 'Actual Churn' column.")
         else:
