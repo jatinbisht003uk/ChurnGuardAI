@@ -34,53 +34,78 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-        :root { --cg-bg: #0b1020; --cg-panel: #121a2d; --cg-line: rgba(148,163,184,.18); }
-        .stApp { background: radial-gradient(ellipse at 12% 0%, rgba(79,70,229,.15), transparent 38%), #0b1020; }
-        .block-container { max-width: 1450px; padding-top: 1.6rem; padding-bottom: 3rem; }
-        [data-testid="stSidebar"] { background: linear-gradient(180deg, #10182b 0%, #0c1221 100%); border-right: 1px solid var(--cg-line); }
-        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { letter-spacing: -.02em; }
-        .hero { position: relative; overflow: hidden; padding: 2rem 2.1rem; border: 1px solid rgba(129,140,248,.32); border-radius: 24px; background: linear-gradient(120deg, rgba(49,46,129,.65), rgba(17,24,39,.92) 58%, rgba(15,118,110,.32)); box-shadow: 0 18px 55px rgba(0,0,0,.22); margin-bottom: 1.5rem; }
-        .hero:after { content: ''; position: absolute; width: 240px; height: 240px; right: -65px; top: -115px; border-radius: 50%; background: rgba(129,140,248,.13); }
-        .hero-kicker { color: #a5b4fc; text-transform: uppercase; font-size: .76rem; font-weight: 800; letter-spacing: .18em; margin-bottom: .5rem; }
-        .hero-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.08; font-weight: 850; letter-spacing: -.045em; margin: 0; color: #f8fafc; }
-        .hero-copy { color: #cbd5e1; font-size: 1.02rem; margin-top: .8rem; max-width: 760px; }
-        .section-title { font-size: 1.45rem; font-weight: 800; letter-spacing: -.025em; margin: 1rem 0; }
-        .section-eyebrow { color: #818cf8; font-size: .75rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; }
+        :root { --cg-bg: #f4f7fb; --cg-panel: #ffffff; --cg-line: #e2e8f0; --cg-blue: #2563eb; }
+        .stApp { background: #f5f8fc; color: #172033; }
+        .block-container { max-width: 1450px; padding-top: 1.5rem; padding-bottom: 3rem; }
+        [data-testid="stSidebar"] { background: #ffffff; border-right: 1px solid #e2e8f0; }
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { color: #172033; letter-spacing: -.02em; }
+        .hero { position: relative; overflow: hidden; padding: 2.2rem 2.3rem; border: 1px solid #dbeafe; border-radius: 24px; background: linear-gradient(120deg, #ffffff 0%, #eff6ff 60%, #ecfeff 100%); box-shadow: 0 12px 35px rgba(37,99,235,.08); margin-bottom: 1.5rem; }
+        .hero:after { content: ''; position: absolute; width: 240px; height: 240px; right: -65px; top: -115px; border-radius: 50%; background: rgba(59,130,246,.10); }
+        .hero-kicker { color: #2563eb; text-transform: uppercase; font-size: .76rem; font-weight: 800; letter-spacing: .18em; margin-bottom: .5rem; }
+        .hero-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.08; font-weight: 850; letter-spacing: -.045em; margin: 0; color: #172033; }
+        .hero-copy { color: #475569; font-size: 1.02rem; margin-top: .8rem; max-width: 760px; }
+        .hero-author { color: #334155; font-size: .9rem; margin-top: 1rem; font-weight: 650; }
+        .section-title { font-size: 1.45rem; font-weight: 800; letter-spacing: -.025em; margin: 1rem 0; color: #172033; }
+        .section-eyebrow { color: #2563eb; font-size: .75rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; }
         .risk-card { padding: 1.25rem 1.4rem; border-radius: 16px; margin: 1rem 0; }
-        .risk-low { background: rgba(34,197,94,.10); border: 1px solid rgba(34,197,94,.5); }
-        .risk-medium { background: rgba(245,158,11,.10); border: 1px solid rgba(245,158,11,.5); }
-        .risk-high { background: rgba(239,68,68,.10); border: 1px solid rgba(239,68,68,.5); }
-        div[data-testid="stMetric"] { background: linear-gradient(145deg, rgba(30,41,59,.82), rgba(15,23,42,.72)); border: 1px solid var(--cg-line); padding: 1.15rem 1.2rem; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.10); }
-        div[data-testid="stMetricLabel"] { color: #a5b4fc; font-weight: 650; }
-        div[data-testid="stMetricValue"] { font-weight: 800; letter-spacing: -.035em; }
-        div[data-testid="stForm"] { background: rgba(15,23,42,.52); border: 1px solid var(--cg-line); padding: 1.25rem; border-radius: 20px; }
+        .risk-low { background: #f0fdf4; border: 1px solid #86efac; }
+        .risk-medium { background: #fffbeb; border: 1px solid #fcd34d; }
+        .risk-high { background: #fef2f2; border: 1px solid #fca5a5; }
+        div[data-testid="stMetric"] { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.1rem 1.2rem; border-radius: 16px; box-shadow: 0 5px 18px rgba(15,23,42,.04); }
+        div[data-testid="stMetricLabel"] { color: #64748b; font-weight: 650; }
+        div[data-testid="stMetricValue"] { color: #172033; font-weight: 800; letter-spacing: -.035em; }
+        div[data-testid="stForm"] { background: #ffffff; border: 1px solid #e2e8f0; padding: 1.25rem; border-radius: 20px; }
         div[data-testid="stVerticalBlockBorderWrapper"] { border-radius: 18px; }
-        .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button { border-radius: 11px; min-height: 2.8rem; font-weight: 750; border: 1px solid rgba(129,140,248,.4); transition: transform .15s ease, box-shadow .15s ease; }
-        .stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(79,70,229,.18); }
+        .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button { border-radius: 11px; min-height: 2.8rem; font-weight: 750; border: 1px solid #bfdbfe; transition: transform .15s ease, box-shadow .15s ease; }
+        .stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button { background: #2563eb; color: white; border: 1px solid #2563eb; }
+        .stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(37,99,235,.14); }
         input, textarea, [data-baseweb="select"] > div { border-radius: 10px !important; }
-        [data-testid="stDataFrame"] { border: 1px solid var(--cg-line); border-radius: 14px; overflow: hidden; }
-        hr { border-color: var(--cg-line); }
-        .footer-note { text-align: center; color: #94a3b8; font-size: .82rem; padding: 1.5rem .5rem .25rem; }
+        [data-testid="stDataFrame"] { border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; }
+        hr { border-color: #e2e8f0; }
+        .footer-note { text-align: center; color: #64748b; font-size: .82rem; padding: 1.5rem .5rem .25rem; }
         footer { visibility: hidden; }
-    </style>
+        /* ChurnGuard AI: dark navy + teal theme */
+        :root { --cg-bg: #07111f; --cg-panel: #0d1b2a; --cg-line: #23384d; --cg-blue: #2dd4bf; }
+        .stApp { background: #07111f; color: #e5eef7; }
+        [data-testid="stSidebar"] { background: #0a1726; border-right: 1px solid #23384d; }
+        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { color: #e5eef7; }
+        .hero { border: 1px solid #245064; background: radial-gradient(circle at 90% 10%, rgba(45,212,191,.16), transparent 30%), linear-gradient(120deg, #0d1b2a 0%, #10283a 65%, #0d3037 100%); box-shadow: 0 12px 35px rgba(0,0,0,.22); }
+        .hero-kicker, .section-eyebrow { color: #5eead4; }
+        .hero-title { color: #f0fdfa; }
+        .hero-copy { color: #b7c8d8; }
+        .hero-author { color: #c5d8e6; }
+        .section-title { color: #e5eef7; }
+        div[data-testid="stMetric"] { background: #0d1b2a; border: 1px solid #23384d; box-shadow: 0 5px 18px rgba(0,0,0,.12); }
+        div[data-testid="stMetricLabel"] { color: #a9bdce; }
+        div[data-testid="stMetricValue"] { color: #f0fdfa; }
+        div[data-testid="stForm"] { background: #0d1b2a; border: 1px solid #23384d; }
+        .stButton > button, .stDownloadButton > button, [data-testid="stFormSubmitButton"] > button { border: 1px solid #2b6570; color: #e6fffb; background: #10283a; }
+        .stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button { background: #0f766e; color: #ffffff; border: 1px solid #2dd4bf; }
+        .stButton > button:hover, .stDownloadButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover { box-shadow: 0 8px 22px rgba(45,212,191,.16); }
+        input, textarea, [data-baseweb="select"] > div { background-color: #102235 !important; color: #e5eef7 !important; }
+        [data-testid="stDataFrame"] { border: 1px solid #23384d; }
+        hr { border-color: #23384d; }
+        .footer-note { color: #8fa8bb; }
+        p, label, .stMarkdown, .stCaption, [data-testid="stWidgetLabel"] { color: inherit; }
+        </style>
     """,
     unsafe_allow_html=True,
 )
 
 def polish_chart(fig, height=360):
-    """Apply a consistent dark, dashboard-friendly Plotly style."""
+    """Apply a consistent light, SaaS-style Plotly theme."""
     fig.update_layout(
-        template="plotly_dark",
+        template="plotly_white",
         height=height,
         margin=dict(l=12, r=12, t=58, b=12),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        title=dict(font=dict(size=16, color="#e2e8f0"), x=0.02, xanchor="left"),
-        font=dict(family="Inter, system-ui, sans-serif", color="#cbd5e1", size=12),
+        title=dict(font=dict(size=16, color="#172033"), x=0.02, xanchor="left"),
+        font=dict(family="Inter, system-ui, sans-serif", color="#475569", size=12),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
     fig.update_xaxes(showgrid=False, zeroline=False)
-    fig.update_yaxes(gridcolor="rgba(148,163,184,.14)", zeroline=False)
+    fig.update_yaxes(gridcolor="#e2e8f0", zeroline=False)
     return fig
 
 
@@ -156,6 +181,7 @@ st.markdown(
       <div class="hero-kicker">Customer Intelligence Platform</div>
       <h1 class="hero-title">ChurnGuard <span style="color:#a5b4fc">AI</span></h1>
       <div class="hero-copy">Predict churn risk. Understand customer patterns. Prioritize retention with actionable analytics powered by your Random Forest model.</div>
+      <div class="hero-author">Designed & developed by Jatin Bisht · Machine Learning & Data Analytics</div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -179,6 +205,11 @@ with st.sidebar:
     st.markdown("**Dataset:** IBM Telco Customer Churn")
     st.markdown("**Input features:** 19")
     st.markdown("**Prediction:** Churn / No Churn")
+    st.divider()
+    st.subheader("👨‍💻 Developer")
+    st.write("Jatin Bisht")
+    st.markdown('<a href="https://github.com/jatinbisht003uk" target="_blank">GitHub</a>',unsafe_allow_html=True)
+    st.markdown('<a href="https://www.linkedin.com/in/jatin-bisht-33580b2b7" target="_blank">LinkedIn</a>', unsafe_allow_html=True)
     st.divider()
     st.caption(
         "This application is a portfolio project. Predictions are "
@@ -933,7 +964,20 @@ except Exception as error:
 # =====================================================
 
 st.divider()
-st.caption("ChurnGuard AI | Customer Churn Prediction & Retention Analytics")
+st.header("👨‍💻 About the Developer")
+about_col1, about_col2 = st.columns([2, 1])
+with about_col1:
+    st.subheader("Jatin Bisht")
+    st.write(
+        "ChurnGuard AI is a machine-learning portfolio project designed to estimate "
+        "customer churn risk, explore customer trends, and suggest practical retention actions."
+    )
+    st.markdown("**Technology stack:** Python · Streamlit · Pandas · Scikit-learn · Plotly · Random Forest")
+    st.markdown("**Project goals:** Predict churn risk, make customer patterns easier to understand, and help prioritize retention outreach.")
+with about_col2:
+    st.markdown("#### Find me online")
+    st.markdown("[GitHub](https://github.com/your-github-username)")
+    st.markdown("[LinkedIn](https://www.linkedin.com/in/your-linkedin-username/)")
+    st.caption("Replace the placeholder URLs in app.py with your real profile links.")
 
-
-st.markdown("<div class='footer-note'>ChurnGuard AI · Customer Churn Prediction & Retention Analytics · Predictions are estimates, not guarantees.</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer-note'>© 2026 Jatin Bisht · ChurnGuard AI · Built with Python & Machine Learning · Predictions are estimates, not guarantees.</div>", unsafe_allow_html=True)
