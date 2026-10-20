@@ -1,0 +1,32 @@
+.venv/
+venv/
+pycache/
+.DS_Store
+.env
+.vscode/
+
+Keep the original customer dataset private
+
+Telco_customer_churn.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# Secrets and local environment variables
+.env
+.env.*
+
+# Editor settings
+.vscode/
+
+# Logs
+*.log
