@@ -745,6 +745,11 @@ if TEST_DATA_PATH.exists():
     try:
         test_df = pd.read_csv(TEST_DATA_PATH)
 
+        st.success(
+            f"Test dataset loaded successfully: {test_df.shape[0]} rows, "
+            f"{test_df.shape[1]} columns."
+        )
+        st.write("Test dataset columns:", test_df.columns.tolist())
         if "Actual Churn" not in test_df.columns:
             st.error("The test CSV must contain an 'Actual Churn' column.")
         else:
